@@ -113,7 +113,16 @@ Root cause:https://blog.csdn.net/qq_41485414/article/details/80817709?ops_reques
     vim .git/config
     url = git@github.com:DMJing/MyEdk2.git
 
-## [4]...
+## [4]
+git push error
+
+    root@jing-VirtualBox:/home/jing/Desktop/edk2/ShellPkg/Application/MyEdk2# git push
+    Username for 'https://github.com': DMjing                                          
+    Password for 'https://DMjing@github.com': 
+    remote: Support for password authentication was removed on August 13, 2021. Please use a personal access token instead.
+    remote: Please see https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/ for more information.
+    fatal: Authentication failed for 'https://github.com/DMJing/MyEdk2.git/'
+    root@jing-VirtualBox:/home/jing/Desktop/edk2/ShellPkg/Application/MyEdk2# git remote set-url origin https://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@github.com/DMJing/MyEdk2.git
 
   
 
