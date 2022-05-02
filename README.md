@@ -113,9 +113,9 @@ Root cause:https://blog.csdn.net/qq_41485414/article/details/80817709?ops_reques
     vim .git/config
     url = git@github.com:DMJing/MyEdk2.git
 
-## [4] ...
+## [4]...
 
-
+  
 
 ---
 If you have other questions, pls comment a code issue,I will try to solve it 
