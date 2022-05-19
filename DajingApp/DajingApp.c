@@ -7,12 +7,17 @@
 
 **/
 
+#include <string.h>
+#include <unistd.h>
 #include <Uefi.h>
 #include <Library/UefiLib.h>
 #include <Library/DebugLib.h>
 #include <Library/ShellCEntryLib.h>
 #include <Library/SortLib.h>
-
+#include <stdio.h>
+#include <../Library/TimerLib.h>
+#include <Library/UefiBootServicesTableLib.h>
+#include <Library/IoLib.h> 
 /**
   Test comparator.
 
@@ -35,12 +40,99 @@ Test (
   }
 
   if (*(INTN *)b1 < *(INTN *)b2) {
-    return (-1);
+    return (-1); 
   }
+
 
   return (1);
 }
 
+BOOLEAN Test1()
+{
+  Print(L"hello Test1\r\n");
+  return TRUE;
+}
+BOOLEAN Test2()
+{
+  Print(L"hello Test2\r\n");
+  return TRUE;
+}
+typedef struct{
+	char	 cmd_name[128];//name of your test command	
+  BOOLEAN (*test_func)();
+	char     help[200];
+}CMD_INFO;
+
+CMD_INFO MT86FuncList[]={
+  {"addrtest", Test1, "help addrtest"},
+  {"addrtest2", Test2, "help addrtest2"}
+
+};
+
+
+
+
+// ****************************** 配置 ***************************
+// 最后100%时的输出形式  
+const char LastStr[] = "[--------------------] 100% "; 
+
+// 进度条标志，可以改用"*"或其它符号
+const char ProgressIcon = '-'; 
+
+// 进度每加5，进度条就会加一格，注意Step值要和LastStr中的"-"数量相匹配，两者相乘等于100
+const int Step = 5; 
+
+// 总共需要多少进度标志，即LastStr中"-"的数量
+const int IconMaxNum = 20; 
+
+// 每隔100ms打印一次，这里同时每隔100ms会让进度加1
+const int PrintInterval = 100000; 
+// ****************************************************************
+
+
+// main函数
+int main123(void)
+{
+    Print(L"\r\n Output recorded data: ");
+    
+    for (int i = 0; i <= 100; ++i)
+    {
+        // -------------- 打印进度条 --------------
+        Print(L"[");
+        int currentIndex = i / Step;
+        for (int j = 0; j < IconMaxNum; ++j)
+        {
+            if (j < currentIndex)
+            {
+                Print(L"%c", ProgressIcon); // 打印进度条标志
+            }
+            else
+            {
+                Print(L" "); // 未达进度则打印空格
+            }
+        }
+        
+        Print(L"] ");
+        // ----------------------------------------
+
+        // -------- 打印数字进度 ----------
+        Print(L"%3d%%", i);
+        //delay
+        MicroSecondDelay(1000000);
+        //gST->ConOut->ClearScreen(gST->ConOut); 
+        
+        for (int j = 0; j < sizeof(LastStr)-2; ++j)
+        {
+            Print(L"\b"); // 回删字符，让数字和进度条原地变化
+        }
+        
+        //gST->ConOut->ClearScreen(gST->ConOut); 
+    }
+    
+    Print(L"\n\n");
+    
+    return 0;
+}
 
 /**
   UEFI application entry point which has an interface similar to a
@@ -63,22 +155,8 @@ ShellAppMain (
   IN CHAR16  **Argv
   )
 {
-  INTN  Array[10];
 
-  Array[0] = 2;
-  Array[1] = 3;
-  Array[2] = 4;
-  Array[3] = 1;
-  Array[4] = 5;
-  Array[5] = 6;
-  Array[6] = 7;
-  Array[7] = 8;
-  Array[8] = 1;
-  Array[9] = 5;
-
-  Print (L"Array = %d, %d, %d, %d, %d, %d, %d, %d, %d, %d\r\n", Array[0], Array[1], Array[2], Array[3], Array[4], Array[5], Array[6], Array[7], Array[8], Array[9]);
-  PerformQuickSort (Array, 10, sizeof (INTN), Test);
-  Print (L"POST-SORT\r\n");
-  Print (L"Array = %d, %d, %d, %d, %d, %d, %d, %d, %d, %d\r\n", Array[0], Array[1], Array[2], Array[3], Array[4], Array[5], Array[6], Array[7], Array[8], Array[9]);
+  Print(L"123\r\n");
+  main123();
   return 0;
 }

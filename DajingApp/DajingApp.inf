@@ -26,6 +26,7 @@
   DajingApp.c
 
 [Packages]
+  CryptoPkg/CryptoPkg.dec
   MdePkg/MdePkg.dec
   ShellPkg/ShellPkg.dec
   MdeModulePkg/MdeModulePkg.dec
@@ -34,3 +35,5 @@
   ShellCEntryLib
   UefiLib
   SortLib
+  TimerLib
+  UefiBootServicesTableLib
