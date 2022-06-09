@@ -2,6 +2,11 @@
 *test some C demo code ,don't need base on UEFI arch
 *Author:dajing
 *****************************************************/
+#define DEMO2
+
+
+#ifdef DEMO1 //print loop
+
 #include <stdio.h>
 #include <stdlib.h>
 #include<unistd.h>
@@ -48,3 +53,29 @@ int main(){
     print_loop2();
     return 0;
 }
+#endif
+
+
+#ifdef DEMO2 //C learning
+/*
+## operator classification
+arithmetic operators:+ - * / % += -+ *= /= %=
+relational operator:> < == >= <= !=
+Logical Operators:&& || !
+bitwise operators: & | ~
+conditional operator:A?B:C
+comma operator: ,   A=(5,6) =>A=6
+increment/decrement operator: ++ --
+
+
+*/
+
+#include <stdio.h>
+
+int main(){
+    int cc = "ads";
+    printf("%c \r\n",cc);
+
+    return 0;
+}
+#endif
