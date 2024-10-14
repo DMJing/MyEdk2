@@ -2,7 +2,7 @@
 *test some C demo code ,don't need base on UEFI arch
 *Author:dajing
 *****************************************************/
-#define DEMO2
+#define DEMO3
 
 
 #ifdef DEMO1 //print loop
@@ -71,11 +71,46 @@ increment/decrement operator: ++ --
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(){
-    int cc = "ads";
-    printf("%c \r\n",cc);
+int a= 10;
+int b = 100;
+int *q = NULL;
+
+void func(int **p)
+{
+    printf("func:\tp=%d\t&p=%d\n",p,&p);     //note:3
+    *p = &b;
+    printf("func:\tp=%d\t&p=%d\n",p,&p);     //note:4
+}
+
+int main()
+{
+    printf("&a=%d\t&b=%d\t&q=%d\n",&a,&b,&q);   //note:1
+    q = &a;
+    printf("*q=%d\tq=%d\t&q=%d\n",*q,q,&q);     //note:2
+    func(&q);
+    printf("*q=%d\tq=%d\t&q=%d\n",*q,q,&q);     //note:5
 
     return 0;
 }
+
+
+#endif
+
+#ifdef DEMO3 //test h file
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "test_h/aa.h"
+
+int main()
+{
+    int a =6;
+    bb(a);
+    printf("hello\n");
+}
+
+
+
 #endif
